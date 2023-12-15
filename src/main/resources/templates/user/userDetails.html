@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Usuário</title>
+    <!-- Adicione aqui os links para os estilos ou frameworks que você deseja usar -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #495057;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .user-details {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            color: #868e96;
+        }
+    </style>
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	    <a class="navbar-brand" href="/">Minha Aplicação</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Usuário
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="userDropdown">
+	                    <a class="dropdown-item" href="/user/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/user/list">Listar</a>
+	                </div>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Tarefas por Usuário
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskListDropdown">
+	                    <a class="dropdown-item" href="/tasklist/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/tasklist/list">Listar</a>
+	                </div>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Tarefa
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskDropdown">
+	                    <a class="dropdown-item" href="/task/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/task/list">Listar</a>
+	                </div>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+
+    <div class="container">
+        <h2>Detalhes do Usuário</h2>
+
+        <div th:if="${user != null}" class="user-details">
+            <div>
+                <strong>ID:</strong> <span th:text="${user.id}"></span>
+            </div>
+            <div>
+                <strong>Nome de Usuário:</strong> <span th:text="${user.username}"></span>
+            </div>
+            <div>
+                <strong>Email:</strong> <span th:text="${user.email}"></span>
+            </div>
+            <div>
+                <strong>Senha:</strong> <span th:text="${user.senha}"></span>
+            </div>
+            <div>
+                <strong>Listas de Tarefas:</strong> <span th:text="${user.taskLists}"></span>
+            </div>
+            <!-- Adicione mais campos conforme necessário -->
+        </div>
+
+        <div th:unless="${user != null}">
+            <p>O usuário não foi encontrado.</p>
+        </div>
+    </div>
+
+    <!-- Adicione aqui scripts JS ou outras dependências que você precisa -->
+
+    <!-- Adicione os scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

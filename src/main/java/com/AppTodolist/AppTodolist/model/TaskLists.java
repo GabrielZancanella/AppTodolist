@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "lista_tarefa") 
@@ -23,7 +24,7 @@ public class TaskLists implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    public String name;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -37,6 +38,9 @@ public class TaskLists implements Serializable {
 
 	@Column(name = "listardatcri")
 	private LocalDateTime createDate;
+	
+	@Transient
+	private String formattedCreateDate;
 
 	@Column(name = "listarcor", nullable = false)
 	private String color;
@@ -100,5 +104,13 @@ public class TaskLists implements Serializable {
 	@Override
 	public String toString() {
 		return "Lista: "+ name + " = " + color + "\n"+ tasks;
+	}
+
+	public String getFormattedCreateDate() {
+		return formattedCreateDate;
+	}
+
+	public void setFormattedCreateDate(String formattedCreateDate) {
+		this.formattedCreateDate = formattedCreateDate;
 	}
 }

@@ -1,5 +1,6 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
+import com.AppTodolist.AppTodolist.model.UserRole;
 import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.model.userContext;
 import com.AppTodolist.AppTodolist.repository.UserRepository;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -30,10 +32,19 @@ public class MainController {
 
         Users user = userRepository.findByUsername(username);
 
-        if (user == null) {
+        if (user == null || !user.getSenha().equals(password)) {
             return "error";
         }
 
-        return "index";
+        userContext.setCurrentUser(user);
+
+        // Redirecionamento com base nos papéis
+        if (user.getRole() == UserRole.ADMIN) {
+            return "admin/index";
+        } else if (user.getRole() == UserRole.USER) {
+            return "user/index";
+        } else {
+            return "error";
+        }
     }
 }

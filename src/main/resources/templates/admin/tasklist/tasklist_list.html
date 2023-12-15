@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Listas de Tarefas</title>
+    
+    <!-- Adicione os links para os estilos Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.16.0/font/bootstrap-icons.css">
+
+    <style>
+        /* Adicione estilos personalizados aqui, se necessário */
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	    <a class="navbar-brand" href="/">Minha Aplicação</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Usuário
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="userDropdown">
+	                    <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/admin/user/list">Listar</a>
+	                </div>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Tarefas por Usuário
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskListDropdown">
+	                    <a class="dropdown-item" href="/admin/tasklist/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/admin/tasklist/list">Listar</a>
+	                </div>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Tarefa
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskDropdown">
+	                    <a class="dropdown-item" href="/admin/task/add">Cadastrar</a>
+	                    <a class="dropdown-item" href="/admin/task/list">Listar</a>
+	                </div>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+
+    <div class="container">
+        <h2 class="text-center mt-4 mb-4">Lista de Listas de Tarefas</h2>
+
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Cor</th>
+                    <th>Data de Criação</th>
+                    <!-- Adicione mais cabeçalhos conforme necessário -->
+                    <th>Tarefas</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="taskList : ${taskLists}">
+                    <td th:text="${taskList.id}"></td>
+                    <td th:text="${taskList.name}"></td>
+                    <td th:text="${taskList.color}"></td>
+					<td th:text="${taskList.formattedCreateDate}"></td>
+				    <td>
+					    <span th:each="task, iterStat : ${taskList.tasks}">
+					        <span th:if="${iterStat.index > 0}"><br></span>
+					        <span th:text="${task.name}"></span>
+					    </span>
+				    </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" th:href="@{/admin/tasklist/{id}(id=${taskList.id})}">
+                            <i class="bi bi-info-circle"></i> Detalhes
+                        </a>
+                        <a class="btn btn-warning btn-sm" th:href="@{/admin/tasklist/update/{id}(id=${taskList.id})}">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/tasklist/delete/{id}(id=${taskList.id})}">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Adicione aqui scripts JS ou outras dependências que você precisa -->
+    <!-- Adicione os scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

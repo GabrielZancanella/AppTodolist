@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update Task</title>
+    <!-- Adicione seus links CSS e scripts JS se necessário -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Minha Aplicação</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav">
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Meus Grupos de Tarefa
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskListDropdown">
+	                    <a class="dropdown-item" href="/user/tasklist/add">Cadastrar Grupo</a>
+	                    <a class="dropdown-item" href="/user/tasklist/list">Listar Grupos</a>
+	                </div>
+	            </li>
+	            <li class="nav-item dropdown">
+	                <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	                    Minhas Tarefas
+	                </a>
+	                <div class="dropdown-menu" aria-labelledby="taskDropdown">
+	                    <a class="dropdown-item" href="/user/task/add">Cadastrar Tarefa</a>
+	                    <a class="dropdown-item" href="/user/task/list">Listar Tarefas</a>
+	                </div>
+	            </li>
+	        </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Update Task</h2>
+
+        <form action="#" th:action="@{/task/update/{id}(id=${updatedTask.id})}" th:object="${updatedTask}" method="post">
+            <!-- Campos para atualização -->
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select class="form-control" id="status" th:field="*{status}" required>
+                    <option value="TODO">To Do</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="DONE">Done</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="taskList">Task List:</label>
+                <select class="form-control" id="taskList" th:field="*{taskList.id}" required>
+                    <!-- Adicione as opções conforme necessário -->
+                </select>
+            </div>
+
+            <!-- Adicione mais campos conforme necessário -->
+
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+
+        <a th:href="@{/task/list}" class="btn btn-secondary">Back to Task List</a>
+    </div>
+
+    <!-- Adicione seus scripts JS e outros elementos HTML conforme necessário -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

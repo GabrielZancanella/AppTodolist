@@ -1,15 +1,12 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.AppTodolist.AppTodolist.model.TaskLists;
 import com.AppTodolist.AppTodolist.model.Tasks;
@@ -17,7 +14,7 @@ import com.AppTodolist.AppTodolist.repository.TaskListRepository;
 import com.AppTodolist.AppTodolist.repository.TaskRepository;
 
 @Controller
-@RequestMapping("/task")
+@RequestMapping("/admin/task") // Adicionando "admin/" ao mapeamento
 public class TasksController {
 
     @Autowired
@@ -33,14 +30,14 @@ public class TasksController {
         model.addAttribute("taskList", taskList);
 
         model.addAttribute("task", new Tasks());
-        return "task/add-task";
+        return "admin/task/add-task"; // Adicionando "admin/" ao redirecionamento
     }
 
     // Método POST para processar a adição de tarefas
     @PostMapping("/add")
     public String addTask(@ModelAttribute Tasks task) {
         taskRepository.save(task);
-        return "redirect:/task/list";
+        return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
     }
 
     // READ
@@ -49,7 +46,7 @@ public class TasksController {
         List<Tasks> tasks = taskRepository.findAll();
         model.addAttribute("tasks", tasks);
 
-        return "task/tasklist";
+        return "admin/task/tasklist"; // Adicionando "admin/" ao redirecionamento
     }
 
     // READ
@@ -58,11 +55,19 @@ public class TasksController {
         Tasks task = taskRepository.findById(id).orElse(null);
 
         if (task == null) {
-            return "redirect:/error";
+            return "redirect:/admin/error"; // Adicionando "admin/" ao redirecionamento
         }
-
+        
+        if (task.getInclusion() != null) {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	        String formattedDate = task.getInclusion().format(formatter);
+	        model.addAttribute("formattedDate", formattedDate);
+        } else {
+            model.addAttribute("formattedDate", "00/00/0000 00:00");
+        }
+        
         model.addAttribute("task", task);
-        return "task/taskDetails";
+        return "admin/task/taskDetails"; // Adicionando "admin/" ao redirecionamento
     }
 
     // UPDATE
@@ -71,11 +76,11 @@ public class TasksController {
         Tasks task = taskRepository.findById(id).orElse(null);
 
         if (task == null) {
-            return "redirect:/task/list";
+            return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
         }
 
         model.addAttribute("updatedTask", task);
-        return "task/update-task";
+        return "admin/task/update-task"; // Adicionando "admin/" ao redirecionamento
     }
 
     // UPDATE
@@ -92,13 +97,13 @@ public class TasksController {
             taskRepository.save(task);
         }
 
-        return "redirect:/task/list";
+        return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
     }
 
     // DELETE
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskRepository.deleteById(id);
-        return "redirect:/task/list";
+        return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
     }
 }

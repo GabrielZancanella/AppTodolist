@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.AppTodolist.AppTodolist.model.TaskLists;
 
 public interface TaskListRepository extends CrudRepository<TaskLists, Long> {
-	Iterable<TaskLists> findByUser_id(Long user_id);
+	List<TaskLists> findByUser_id(Long user_id);
 
 	TaskLists findById(Integer id);
 

@@ -25,7 +25,9 @@ public class Users implements Serializable{
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<TaskLists> taskLists;
-
+    
+    private UserRole role;
+    
 	@Column(name = "usuema", nullable = false)
 	private String email;
 
@@ -75,6 +77,13 @@ public class Users implements Serializable{
 	@Override
 	public String toString() {
 		return username + ", " + email + ", " + senha ;
-	}	
-	
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
 }

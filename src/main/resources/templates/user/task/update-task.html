@@ -43,7 +43,7 @@
     <div class="container mt-4">
         <h2>Update Task</h2>
 
-        <form action="#" th:action="@{/task/update/{id}(id=${updatedTask.id})}" th:object="${updatedTask}" method="post">
+        <form action="#" th:action="@{/user/task/update/{id}(id=${updatedTask.id})}" th:object="${updatedTask}" method="post">
             <!-- Campos para atualização -->
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -76,7 +76,7 @@
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
 
-        <a th:href="@{/task/list}" class="btn btn-secondary">Back to Task List</a>
+        <a th:href="@{/user/task/list}" class="btn btn-secondary">Back to Task List</a>
     </div>
 
     <!-- Adicione seus scripts JS e outros elementos HTML conforme necessário -->

@@ -14,16 +14,14 @@ public class AdminUserInitializer {
 
     @PostConstruct
     public void initializeAdminUser() {
-        // Verifica se há um usuário admin no banco de dados
         Users adminUser = userRepository.findByRole(UserRole.ADMIN);
 
         if (adminUser == null) {
-            // Se não houver, cria um usuário admin
             adminUser = new Users();
             adminUser.setUsername("admin");
             adminUser.setEmail("admin@example.com");
-            adminUser.setSenha("admin");
             adminUser.setRole(UserRole.ADMIN);
+            adminUser.setSenha("admin"); // Configure a senha diretamente como texto
 
             userRepository.save(adminUser);
         }

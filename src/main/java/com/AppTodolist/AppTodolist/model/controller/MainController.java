@@ -1,13 +1,14 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import com.AppTodolist.AppTodolist.model.UserRole;
 import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.model.userContext;
 import com.AppTodolist.AppTodolist.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
@@ -21,7 +22,6 @@ public class MainController {
         return "login";
     }
 
-    // Método POST para processar login
     @PostMapping("/")
     public String login(String username, String password, Model model) {
         userContext.clearCurrentUser();
@@ -37,6 +37,7 @@ public class MainController {
         }
 
         userContext.setCurrentUser(user);
+
 
         // Redirecionamento com base nos papéis
         if (user.getRole() == UserRole.ADMIN) {

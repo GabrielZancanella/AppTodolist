@@ -97,6 +97,4 @@ public class Tasks implements Serializable{
 	public String toString() {
 		return ""+ id;
 	}
-	
-	
 }

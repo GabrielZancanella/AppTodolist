@@ -1,22 +1,27 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
-import com.AppTodolist.AppTodolist.model.TaskLists;
-import com.AppTodolist.AppTodolist.model.Users;
-import com.AppTodolist.AppTodolist.repository.TaskListRepository;
-import com.AppTodolist.AppTodolist.repository.UserRepository;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.AppTodolist.AppTodolist.model.TaskLists;
+import com.AppTodolist.AppTodolist.model.Users;
+import com.AppTodolist.AppTodolist.repository.TaskListRepository;
+import com.AppTodolist.AppTodolist.repository.UserRepository;
+
 @Controller
-@RequestMapping("/admin/tasklist") // Adicionando "admin/" ao mapeamento
+@RequestMapping("/admin/tasklist")
 public class AdminTaskListsController {
 
     @Autowired
@@ -24,85 +29,72 @@ public class AdminTaskListsController {
 
     @Autowired
     private UserRepository userRepository;
-    // CREATE
-    @GetMapping("/add/{userId}")
-    public String showAddTaskListForm(Model model) {//@PathVariable Long userId, Model model) {
-    	
-    	/*Optional<Users> optionalUser = userRepository.findById(userId);
-    	Users user = null;
-    	
-    	if (optionalUser.isPresent()) {
-    		user = optionalUser.get();
-    		model.addAttribute("username", user.getUsername());
-    	}*/
+
+    @GetMapping("/add")
+    public String showAddTaskListForm(Model model) {
+    	Users user = userRepository.findAllById(1);
+	    model.addAttribute("user", user);
 
         model.addAttribute("taskList", new TaskLists());
-        return "admin/tasklist/add-tasklist"; // Adicionando "admin/" ao redirecionamento
+        return "admin/tasklist/add-tasklist";
     }
 
-    // Método POST para processar a adição de lista de tarefas
     @PostMapping("/add")
-    public String addTaskList(@ModelAttribute TaskLists taskList){//, Users user)  {
-        //taskList.setUserId(user.getId());	
+    public String addTaskList(@ModelAttribute TaskLists taskList, Principal principal) {
         taskListsRepository.save(taskList);
-        return "redirect:/admin/tasklist/list"; // Adicionando "admin/" ao redirecionamento
+        return "redirect:/admin/tasklist/list";
     }
 
-    // READ
     @GetMapping("/list")
     public String listTaskLists(Model model, Principal principal) {
-    	List<TaskLists> taskLists = null;
+        List<TaskLists> taskLists = null;
+        taskLists = taskListsRepository.findAll();
 
-    	
-    	if (principal != null) {
+        /*if (principal != null) {
             String username = principal.getName();
             Users user = userRepository.findByUsername(username);
-            
             taskLists = taskListsRepository.findByUser_id(user.getId());
-    	}
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        
-        if (taskLists != null) {
-        	taskLists.forEach(taskList -> {
-        		if (taskList.getCreateDate() != null) {
-        			taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
-        		}
-        	});
         }
-        
+		*/
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+        if (taskLists != null) {
+            taskLists.forEach(taskList -> {
+                if (taskList.getCreateDate() != null) {
+                    taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
+                }
+            });
+        }
+
         model.addAttribute("taskLists", taskLists);
-        
-        return "admin/tasklist/tasklist_list"; // Adicionando "admin/" ao redirecionamento
+
+        return "admin/tasklist/tasklist_list";
     }
 
-    // READ
     @GetMapping("/{id}")
     public String taskListDetails(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
 
         if (taskList == null) {
-            return "redirect:/admin/error"; // Adicionando "admin/" ao redirecionamento
+            return "redirect:/admin/error";
         }
 
         model.addAttribute("taskList", taskList);
-        return "admin/tasklist/taskListDetails"; // Adicionando "admin/" ao redirecionamento
+        return "admin/tasklist/taskListDetails";
     }
 
-    // UPDATE
     @GetMapping("/update/{id}")
     public String showUpdateTaskListForm(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
 
         if (taskList == null) {
-            return "redirect:/admin/error"; // Adicionando "admin/" ao redirecionamento
+            return "redirect:/admin/error";
         }
 
         model.addAttribute("updatedTaskList", taskList);
-        return "admin/tasklist/update-tasklist"; // Adicionando "admin/" ao redirecionamento
+        return "admin/tasklist/update-tasklist";
     }
 
-    // POST para processar a atualização da lista de tarefas
     @PostMapping("/update/{id}")
     public String updateTaskList(@PathVariable Long id, @ModelAttribute TaskLists updatedTaskList) {
         Optional<TaskLists> currentTaskList = taskListsRepository.findById(id);
@@ -113,17 +105,15 @@ public class AdminTaskListsController {
             taskListsRepository.save(taskList);
         }
 
-        return "redirect:/admin/tasklist/list"; // Adicionando "admin/" ao redirecionamento
+        return "redirect:/admin/tasklist/list";
     }
 
-    // DELETE
     @GetMapping("/delete/{id}")
     public String deleteTaskList(@PathVariable Long id) {
         taskListsRepository.deleteById(id);
-        return "redirect:/admin/tasklist/list"; // Adicionando "admin/" ao redirecionamento
+        return "redirect:/admin/tasklist/list";
     }
 
-    // Método privado para atualizar os campos da lista de tarefas
     private void updateTaskListFields(TaskLists taskList, TaskLists updatedTaskList) {
         taskList.setName(updatedTaskList.getName());
         taskList.setColor(updatedTaskList.getColor());

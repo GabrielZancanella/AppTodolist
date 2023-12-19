@@ -19,8 +19,8 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "lista_tarefa") 
 public class TaskLists implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +28,9 @@ public class TaskLists implements Serializable {
     public String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id") // Mapeia a coluna user_id na tabela lista_tarefa
     private Users user;
-    
+
     @Column(name = "user_id", insertable = false, updatable = false)
     private Long userId;
 
@@ -46,79 +46,75 @@ public class TaskLists implements Serializable {
             createDate = LocalDateTime.now();
         }
     }
-	
-	@Transient
-	private String formattedCreateDate;
 
-	@Column(name = "listarcor", nullable = false)
-	private String color;
+    @Transient
+    private String formattedCreateDate;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(name = "listarcor", nullable = false)
+    private String color;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Users getuser() {
-		return user;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setUser(Users user) {
-		this.user = user;
-	}
+    public Users getUser() {
+        return user;
+    }
 
-	public List<Tasks> getTasks() {
-		return tasks;
-	}
+    public void setUser(Users user) {
+        this.user = user;
+        this.userId = user.getId(); // Atualiza o userId quando o usuário é definido
+    }
 
-	public void setTasks(List<Tasks> tasks) {
-		this.tasks = tasks;
-	}
+    public List<Tasks> getTasks() {
+        return tasks;
+    }
 
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
+    public void setTasks(List<Tasks> tasks) {
+        this.tasks = tasks;
+    }
 
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
 
-	public String getColor() {
-		return color;
-	}
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setColor(String color) {
-		this.color = color;
-	}
+    public String getColor() {
+        return color;
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+    public String getFormattedCreateDate() {
+        return formattedCreateDate;
+    }
 
-	@Override
-	public String toString() {
-		return "Lista: "+ name + " = " + color + "\n"+ tasks;
-	}
+    public void setFormattedCreateDate(String formattedCreateDate) {
+        this.formattedCreateDate = formattedCreateDate;
+    }
 
-	public String getFormattedCreateDate() {
-		return formattedCreateDate;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setFormattedCreateDate(String formattedCreateDate) {
-		this.formattedCreateDate = formattedCreateDate;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

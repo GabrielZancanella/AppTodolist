@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,6 +34,13 @@ public class Tasks implements Serializable{
 
 	@Column(name = "tarinc")
 	private LocalDateTime inclusion;
+	
+	@PrePersist
+    public void prePersist() {
+        if (inclusion == null) {
+        	inclusion = LocalDateTime.now();
+        }
+    }
 	
 	@Column(name = "tarest", nullable = false)
 	private String status;

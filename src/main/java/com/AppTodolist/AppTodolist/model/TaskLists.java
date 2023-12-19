@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -36,8 +37,15 @@ public class TaskLists implements Serializable {
     @OneToMany(mappedBy = "taskList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tasks> tasks;
 
-	@Column(name = "listardatcri")
-	private LocalDateTime createDate;
+    @Column(name = "listardatcri")
+    private LocalDateTime createDate;
+
+    @PrePersist
+    public void prePersist() {
+        if (createDate == null) {
+            createDate = LocalDateTime.now();
+        }
+    }
 	
 	@Transient
 	private String formattedCreateDate;

@@ -1,12 +1,16 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
 import com.AppTodolist.AppTodolist.model.TaskLists;
+import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.repository.TaskListRepository;
+import com.AppTodolist.AppTodolist.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
@@ -18,36 +22,57 @@ public class AdminTaskListsController {
     @Autowired
     private TaskListRepository taskListsRepository;
 
+    @Autowired
+    private UserRepository userRepository;
     // CREATE
-    @GetMapping("/add")
-    public String showAddTaskListForm(Model model) {
+    @GetMapping("/add/{userId}")
+    public String showAddTaskListForm(Model model) {//@PathVariable Long userId, Model model) {
+    	
+    	/*Optional<Users> optionalUser = userRepository.findById(userId);
+    	Users user = null;
+    	
+    	if (optionalUser.isPresent()) {
+    		user = optionalUser.get();
+    		model.addAttribute("username", user.getUsername());
+    	}*/
+
         model.addAttribute("taskList", new TaskLists());
         return "admin/tasklist/add-tasklist"; // Adicionando "admin/" ao redirecionamento
     }
 
     // Método POST para processar a adição de lista de tarefas
     @PostMapping("/add")
-    public String addTaskList(@ModelAttribute TaskLists taskList) {
+    public String addTaskList(@ModelAttribute TaskLists taskList){//, Users user)  {
+        //taskList.setUserId(user.getId());	
         taskListsRepository.save(taskList);
         return "redirect:/admin/tasklist/list"; // Adicionando "admin/" ao redirecionamento
     }
 
     // READ
     @GetMapping("/list")
-    public String listTaskLists(Model model) {
-        List<TaskLists> taskLists = taskListsRepository.findAll();
+    public String listTaskLists(Model model, Principal principal) {
+    	List<TaskLists> taskLists = null;
 
+    	
+    	if (principal != null) {
+            String username = principal.getName();
+            Users user = userRepository.findByUsername(username);
+            
+            taskLists = taskListsRepository.findByUser_id(user.getId());
+    	}
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-        taskLists.forEach(taskList -> {
-            if (taskList.getCreateDate() != null) {
-                taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
-            } else {
-                taskList.setFormattedCreateDate("00/00/0000 00:00");
-            }
-        });
-        	
+        
+        if (taskLists != null) {
+        	taskLists.forEach(taskList -> {
+        		if (taskList.getCreateDate() != null) {
+        			taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
+        		}
+        	});
+        }
+        
         model.addAttribute("taskLists", taskLists);
+        
         return "admin/tasklist/tasklist_list"; // Adicionando "admin/" ao redirecionamento
     }
 

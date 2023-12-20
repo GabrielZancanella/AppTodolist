@@ -18,9 +18,13 @@ public class UserTaskListsController {
     @Autowired
     private TaskListRepository taskListsRepository;
 
-    // CREATE
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping("/add")
     public String showAddTaskListForm(Model model) {
+    	List<Users> userList = userRepository.findAll();
+        model.addAttribute("userList", userList);
         model.addAttribute("taskList", new TaskLists());
         return "user/tasklist/add-tasklist";
     }
@@ -35,17 +39,18 @@ public class UserTaskListsController {
     // READ
     @GetMapping("/list")
     public String listTaskLists(Model model) {
-        List<TaskLists> taskLists = taskListsRepository.findAll();
+        List<TaskLists> taskLists = null;
+        taskLists = taskListsRepository.findAll();
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
-        taskLists.forEach(taskList -> {
-            if (taskList.getCreateDate() != null) {
-                taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
-            } else {
-                taskList.setFormattedCreateDate("00/00/0000 00:00");
-            }
-        });
+        if (taskLists != null) {
+            taskLists.forEach(taskList -> {
+                if (taskList.getCreateDate() != null) {
+                    taskList.setFormattedCreateDate(taskList.getCreateDate().format(formatter));
+                }
+            });
+        }
         	
         model.addAttribute("taskLists", taskLists);
         return "user/tasklist/tasklist_list"; // Adicionando "user/" ao redirecionamento
@@ -68,24 +73,25 @@ public class UserTaskListsController {
     @GetMapping("/update/{id}")
     public String showUpdateTaskListForm(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
-
+        List<Users> userList = userRepository.findAll();
         if (taskList == null) {
             return "redirect:/user/error"; // Adicionando "user/" ao redirecionamento
         }
 
-        model.addAttribute("updatedTaskList", taskList);
+        model.addAttribute("userList", userList);
+        model.addAttribute("taskList", taskList);
         return "user/tasklist/update-tasklist"; // Adicionando "user/" ao redirecionamento
     }
 
     // POST para processar a atualização da lista de tarefas
     @PostMapping("/update/{id}")
     public String updateTaskList(@PathVariable Long id, @ModelAttribute TaskLists updatedTaskList) {
-        Optional<TaskLists> currentTaskList = taskListsRepository.findById(id);
+        Optional<TaskLists> currentTaskListOptional = taskListsRepository.findById(id);
 
-        if (currentTaskList.isPresent()) {
-            TaskLists taskList = currentTaskList.get();
-            updateTaskListFields(taskList, updatedTaskList);
-            taskListsRepository.save(taskList);
+        if (currentTaskListOptional.isPresent()) {
+            TaskLists currentTaskList = currentTaskListOptional.get();
+            updateTaskListFields(currentTaskList, updatedTaskList);
+            taskListsRepository.save(currentTaskList);
         }
 
         return "redirect:/user/tasklist/list"; // Adicionando "user/" ao redirecionamento
@@ -102,6 +108,6 @@ public class UserTaskListsController {
     private void updateTaskListFields(TaskLists taskList, TaskLists updatedTaskList) {
         taskList.setName(updatedTaskList.getName());
         taskList.setColor(updatedTaskList.getColor());
-        taskList.setTasks(updatedTaskList.getTasks());
+        taskList.setUser(updatedTaskList.getUser());
     }
 }

@@ -102,10 +102,10 @@ public class AdminTasksController {
         return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
     }
 
-    // DELETE
+ // DELETE
     @GetMapping("/delete/{id}")
-    public String deleteTask(@PathVariable Long id) {
+    public String deleteTask(@PathVariable("id") Long id) {
         taskRepository.deleteById(id);
-        return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
+        return "redirect:/admin/task/list";
     }
 }

@@ -112,8 +112,12 @@ public class AdminTaskListsController {
     private void updateTaskListFields(TaskLists taskList, TaskLists updatedTaskList) {
         taskList.setName(updatedTaskList.getName());
         taskList.setColor(updatedTaskList.getColor());
-        // Atualize o usuário associado à TaskList
         taskList.setUser(updatedTaskList.getUser());
-        // Atualize outras propriedades conforme necessário
+    }
+ // DELETE
+    @GetMapping("/delete/{id}")
+    public String deleteTaskList(@PathVariable("id") Long id) {
+        taskListsRepository.deleteById(id);
+        return "redirect:/admin/tasklist/list";
     }
 }

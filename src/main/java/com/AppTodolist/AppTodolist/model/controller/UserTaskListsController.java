@@ -1,7 +1,10 @@
 package com.AppTodolist.AppTodolist.model.controller;
 
 import com.AppTodolist.AppTodolist.model.TaskLists;
+import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.repository.TaskListRepository;
+import com.AppTodolist.AppTodolist.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

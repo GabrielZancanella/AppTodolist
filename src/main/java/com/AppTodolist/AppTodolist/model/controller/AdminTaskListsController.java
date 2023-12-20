@@ -41,7 +41,6 @@ public class AdminTaskListsController {
 
     @PostMapping("/add")
     public String addTaskList(@ModelAttribute TaskLists taskList, Users user) {
-    	//taskList.setUser(user);
         taskListsRepository.save(taskList);
         return "redirect:/admin/tasklist/list";
     }
@@ -87,37 +86,34 @@ public class AdminTaskListsController {
     @GetMapping("/update/{id}")
     public String showUpdateTaskListForm(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
-
+        List<Users> userList = userRepository.findAll();
         if (taskList == null) {
             return "redirect:/admin/error";
         }
-
-        model.addAttribute("updatedTaskList", taskList);
+        
+        model.addAttribute("userList", userList);
+        model.addAttribute("taskList", taskList);
         return "admin/tasklist/update-tasklist";
     }
 
     @PostMapping("/update/{id}")
     public String updateTaskList(@PathVariable Long id, @ModelAttribute TaskLists updatedTaskList) {
-        Optional<TaskLists> currentTaskList = taskListsRepository.findById(id);
+        Optional<TaskLists> currentTaskListOptional = taskListsRepository.findById(id);
 
-        if (currentTaskList.isPresent()) {
-            TaskLists taskList = currentTaskList.get();
-            updateTaskListFields(taskList, updatedTaskList);
-            taskListsRepository.save(taskList);
+        if (currentTaskListOptional.isPresent()) {
+            TaskLists currentTaskList = currentTaskListOptional.get();
+            updateTaskListFields(currentTaskList, updatedTaskList);
+            taskListsRepository.save(currentTaskList);
         }
 
-        return "redirect:/admin/tasklist/list";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteTaskList(@PathVariable Long id) {
-        taskListsRepository.deleteById(id);
         return "redirect:/admin/tasklist/list";
     }
 
     private void updateTaskListFields(TaskLists taskList, TaskLists updatedTaskList) {
         taskList.setName(updatedTaskList.getName());
         taskList.setColor(updatedTaskList.getColor());
-        taskList.setTasks(updatedTaskList.getTasks());
+        // Atualize o usuário associado à TaskList
+        taskList.setUser(updatedTaskList.getUser());
+        // Atualize outras propriedades conforme necessário
     }
 }

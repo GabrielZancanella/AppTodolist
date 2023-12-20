@@ -29,7 +29,7 @@
 	                    Usuário
 	                </a>
 	                <div class="dropdown-menu" aria-labelledby="userDropdown">
-	                    <a class="dropdown-item" href="/admin/user/add/{userId}">Cadastrar</a>
+	                    <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
 	                    <a class="dropdown-item" href="/admin/user/list">Listar</a>
 	                </div>
 	            </li>
@@ -71,7 +71,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="taskList : ${taskLists}">
+                <tr th:each="taskList : ${taskLists}" th:style="'background-color: ' + ${taskList.color}">
                     <td th:text="${taskList.id}"></td>
                     <td th:text="${taskList.name}"></td>
                     <td th:text="${taskList.color}"></td>
@@ -89,9 +89,9 @@
 					    <a class="btn btn-warning btn-sm" th:if="${taskList != null}" th:href="@{/admin/tasklist/update/{id}(id=${taskList.id})}">
 					        <i class="bi bi-pencil"></i> Editar
 					    </a>
-					    <a class="btn btn-danger btn-sm" th:if="${taskList != null}" th:href="@{/admin/tasklist/delete/{taskId}(taskId=${taskList.id})}">
-						    <i class="bi bi-trash"></i> Excluir
-						</a>
+					    <a class="btn btn-danger btn-sm" th:if="${taskList != null}" th:href="@{/admin/tasklist/delete/{id}(id=${taskList.id})}">
+					        <i class="bi bi-trash"></i> Excluir
+					    </a>
 					</td>
                 </tr>
             </tbody>

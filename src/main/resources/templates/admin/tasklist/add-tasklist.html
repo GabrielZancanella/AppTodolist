@@ -15,35 +15,35 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-	        <ul class="navbar-nav">
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Usuário
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="userDropdown">
-	                    <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/user/list">Listar</a>
-	                </div>
-	            </li>
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Tarefas por Usuário
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="taskListDropdown">
-	                    <a class="dropdown-item" href="/admin/tasklist/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/tasklist/list">Listar</a>
-	                </div>
-	            </li>
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Tarefa
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="taskDropdown">
-	                    <a class="dropdown-item" href="/admin/task/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/task/list">Listar</a>
-	                </div>
-	            </li>
-	        </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Usuário
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/user/list">Listar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tarefas por Usuário
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="taskListDropdown">
+                        <a class="dropdown-item" href="/admin/tasklist/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/tasklist/list">Listar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tarefa
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="taskDropdown">
+                        <a class="dropdown-item" href="/admin/task/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/task/list">Listar</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -56,23 +56,37 @@
                 <label for="name">Nome:</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
-			<div class="form-group">
-			    <label for="user">Usuário:</label>
-			    <select class="form-control" id="user" th:field="*{user.id}" required>
-			        <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
-			    </select>
-			</div>
+            <div class="form-group">
+                <label for="user">Usuário:</label>
+                <select class="form-control" id="user" th:field="*{user.id}" required>
+                    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="color">Cor:</label>
-                <input type="text" class="form-control" id="color" th:field="*{color}" required>
+                <select class="form-control" id="color" th:field="*{color}" required>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Green">Green</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Grey">Grey</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
+                    <option value="Turquoise">Turquoise</option>
+                    <option value="Coral">Coral</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                </select>
             </div>
-			<input hidden type="text" id="createDate" th:field="*{createDate}" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" class="form-control" readonly>
+            <input hidden type="text" id="createDate" th:field="*{createDate}" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" class="form-control" readonly>
             <!-- Adicione mais campos conforme necessário -->
             <button type="submit" class="btn btn-primary">Adicionar Lista de Tarefas</button>
-            
         </form>
     </div>
-    </nav>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

@@ -32,15 +32,16 @@ public class AdminTaskListsController {
 
     @GetMapping("/add")
     public String showAddTaskListForm(Model model) {
-    	Users user = userRepository.findAllById(1);
-	    model.addAttribute("user", user);
+    	List<Users> userList = userRepository.findAll();
+        model.addAttribute("userList", userList);
 
         model.addAttribute("taskList", new TaskLists());
         return "admin/tasklist/add-tasklist";
     }
 
     @PostMapping("/add")
-    public String addTaskList(@ModelAttribute TaskLists taskList, Principal principal) {
+    public String addTaskList(@ModelAttribute TaskLists taskList, Users user) {
+    	//taskList.setUser(user);
         taskListsRepository.save(taskList);
         return "redirect:/admin/tasklist/list";
     }

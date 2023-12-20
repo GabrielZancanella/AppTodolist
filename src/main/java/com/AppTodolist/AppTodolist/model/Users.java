@@ -74,16 +74,16 @@ public class Users implements Serializable{
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return username + ", " + email + ", " + senha ;
-	}
-
 	public UserRole getRole() {
 		return role;
 	}
 
 	public void setRole(UserRole role) {
 		this.role = role;
+	}
+	
+	@Override
+	public String toString() {
+		return username;
 	}
 }

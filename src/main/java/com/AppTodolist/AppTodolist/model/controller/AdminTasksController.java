@@ -74,7 +74,9 @@ public class AdminTasksController {
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Tasks task = taskRepository.findById(id).orElse(null);
-
+        List<TaskLists> taskList = taskListRepository.findAll();
+        model.addAttribute("taskList", taskList);
+        
         if (task == null) {
             return "redirect:/admin/task/list"; // Adicionando "admin/" ao redirecionamento
         }

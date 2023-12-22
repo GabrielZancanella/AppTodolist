@@ -10,7 +10,7 @@ import com.AppTodolist.AppTodolist.model.Users;
 public interface UserRepository extends CrudRepository<Users, Long> {
 	Users findByUsername(String username);
 	
-	Users findByRole(UserRole userRole);
+	List<Users> findByRole(UserRole role);
 
 	Users findBySenha(String senha);
 

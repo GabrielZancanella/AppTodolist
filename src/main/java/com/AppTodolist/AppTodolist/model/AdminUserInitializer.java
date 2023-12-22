@@ -1,5 +1,7 @@
 package com.AppTodolist.AppTodolist.model;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.AppTodolist.AppTodolist.repository.UserRepository;
@@ -14,10 +16,12 @@ public class AdminUserInitializer {
 
     @PostConstruct
     public void initializeAdminUser() {
-        Users adminUser = userRepository.findByRole(UserRole.ADMIN);
+        // Busca todos os usuários com a função findByRole
+        List<Users> adminUsers = userRepository.findByRole(UserRole.ADMIN);
 
-        if (adminUser == null) {
-            adminUser = new Users();
+        // Se não houver nenhum usuário administrador, inicializa um
+        if (adminUsers.isEmpty()) {
+            Users adminUser = new Users();
             adminUser.setUsername("admin");
             adminUser.setEmail("admin@example.com");
             adminUser.setRole(UserRole.ADMIN);

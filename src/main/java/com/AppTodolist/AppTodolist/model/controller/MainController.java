@@ -41,7 +41,7 @@ public class MainController {
 
         // Redirecionamento com base nos papéis
         if (user.getRole() == UserRole.ADMIN) {
-            return "admin/index";
+        	return "redirect:/admin/home";
         } else if (user.getRole() == UserRole.USER) {
             return "user/index";
         } else {

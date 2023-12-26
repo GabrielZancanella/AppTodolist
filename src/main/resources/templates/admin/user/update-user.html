@@ -12,7 +12,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Minha Aplicação</a>
+        <a class="navbar-brand" href="/admin/home">Menu Inicial</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -52,7 +52,7 @@
     <div class="container mt-4">
         <h2>Update User</h2>
 
-        <form action="#" th:action="@{/user/update/{id}(id=${updatedUser.id})}" th:object="${updatedUser}" method="post">
+        <form action="#" th:action="@{/admin/user/update/{id}(id=${updatedUser.id})}" th:object="${updatedUser}" method="post">
             <!-- Campos para atualização -->
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -74,7 +74,7 @@
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
 
-        <a th:href="@{/user/list}" class="btn btn-secondary">Back to User List</a>
+        <a th:href="@{/admin/user/list}" class="btn btn-secondary">Back to User List</a>
     </div>
 
     <!-- Adicione seus scripts JS e outros elementos HTML conforme necessário -->

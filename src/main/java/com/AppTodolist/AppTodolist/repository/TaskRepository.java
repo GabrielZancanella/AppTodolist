@@ -8,6 +8,8 @@ import com.AppTodolist.AppTodolist.model.TaskLists;
 import com.AppTodolist.AppTodolist.model.Tasks;
 
 public interface TaskRepository extends CrudRepository<Tasks, Long> {
+	long count();
+	
 	Iterable<Tasks> findByTaskList(TaskLists TaskList);
 
 	Tasks findById(Integer id);

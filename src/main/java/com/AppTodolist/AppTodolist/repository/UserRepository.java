@@ -8,6 +8,8 @@ import com.AppTodolist.AppTodolist.model.UserRole;
 import com.AppTodolist.AppTodolist.model.Users;
 
 public interface UserRepository extends CrudRepository<Users, Long> {
+	long count();
+	
 	Users findByUsername(String username);
 	
 	List<Users> findByRole(UserRole role);

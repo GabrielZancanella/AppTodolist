@@ -11,7 +11,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/admin/home">Minha Aplicação</a>
+    <a class="navbar-brand" href="/admin/home">Menu Inicial</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,6 +47,51 @@
         </ul>
     </div>
 </nav>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Informações de Usuários</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Adicione informações relevantes sobre usuários aqui -->
+                    <p>Total de Usuários: <span th:text="${totalUsuarios}"></span></p>
+                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Listas de Tarefas</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Adicione informações relevantes sobre listas de tarefas aqui -->
+                    <p>Total de Listas:  <span th:text="${totalListas}"></span></p>
+                    <p>Listas Concluídas: 30</p>
+                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Tarefas</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Adicione informações relevantes sobre tarefas aqui -->
+                    <p>Total de Tarefas:  <span th:text="${totalTarefas}"></span></p>
+                    <p>Tarefas Concluídas: 120</p>
+                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

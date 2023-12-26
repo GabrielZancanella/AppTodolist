@@ -10,9 +10,73 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.16.0/font/bootstrap-icons.css">
 
     <style>
-        /* Adicione estilos personalizados aqui, se necessário */
         body {
-            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link {
+            color: rgb(0, 0, 0);
+        }
+
+        .navbar-light .navbar-brand:hover, .navbar-light .navbar-nav .nav-link:hover {
+            color: rgb(0, 0, 0);
+        }
+
+        table {
+            margin-top: 20px;
+        }
+
+        th {
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .btn-info {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
@@ -23,35 +87,35 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-	        <ul class="navbar-nav">
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Usuário
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="userDropdown">
-	                    <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/user/list">Listar</a>
-	                </div>
-	            </li>
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Tarefas por Usuário
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="taskListDropdown">
-	                    <a class="dropdown-item" href="/admin/tasklist/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/tasklist/list">Listar</a>
-	                </div>
-	            </li>
-	            <li class="nav-item dropdown">
-	                <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	                    Tarefa
-	                </a>
-	                <div class="dropdown-menu" aria-labelledby="taskDropdown">
-	                    <a class="dropdown-item" href="/admin/task/add">Cadastrar</a>
-	                    <a class="dropdown-item" href="/admin/task/list">Listar</a>
-	                </div>
-	            </li>
-	        </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Usuário
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="/admin/user/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/user/list">Listar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tarefas por Usuário
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="taskListDropdown">
+                        <a class="dropdown-item" href="/admin/tasklist/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/tasklist/list">Listar</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="taskDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tarefa
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="taskDropdown">
+                        <a class="dropdown-item" href="/admin/task/add">Cadastrar</a>
+                        <a class="dropdown-item" href="/admin/task/list">Listar</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -66,33 +130,32 @@
                     <th>Descrição</th>
                     <th>Status</th>
                     <th>Lista de Tarefas</th>
-                    <!-- Adicione mais cabeçalhos conforme necessário -->
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
-				<tr th:each="task : ${tasks}" th:class="${task.status == 'A Fazer' ? 'table-danger' : (task.status == 'Em Progresso' ? 'table-info' : 'table-success')}">
-				    <td th:text="${task.id}"></td>
-				    <td th:text="${task.name}"></td>
-				    <td th:text="${task.description}"></td>
-				    <td th:text="${task.status}"></td>
-				
-				    <!-- Iterar sobre as listas de tarefas associadas a cada tarefa -->
-				    <td th:text="${task.taskList.name}"></td>
-				
-				    <!-- Adicione mais colunas conforme necessário -->
-				    <td>
-				        <a class="btn btn-info btn-sm" th:href="@{/admin/task/{id}(id=${task.id})}">
-				            <i class="bi bi-info-circle"></i> Detalhes
-				        </a>
-				        <a class="btn btn-warning btn-sm" th:href="@{/admin/task/update/{id}(id=${task.id})}">
-				            <i class="bi bi-pencil"></i> Editar
-				        </a>
-				        <a class="btn btn-danger btn-sm" th:href="@{/admin/task/delete/{id}(id=${task.id})}">
-				            <i class="bi bi-trash"></i> Excluir
-				        </a>
-				    </td>
-				</tr>
+                <tr th:each="task : ${tasks}" th:class="${task.status == 'A Fazer' ? 'table-danger' : (task.status == 'Em Progresso' ? 'table-info' : 'table-success')}">
+                    <td th:text="${task.id}"></td>
+                    <td th:text="${task.name}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td th:text="${task.status}"></td>
+                
+                    <!-- Iterar sobre as listas de tarefas associadas a cada tarefa -->
+                    <td th:text="${task.taskList.name}"></td>
+                
+                    <!-- Adicione mais colunas conforme necessário -->
+                    <td>
+                        <a class="btn btn-info btn-sm" th:href="@{/admin/task/{id}(id=${task.id})}">
+                            <i class="bi bi-info-circle"></i> Detalhes
+                        </a>
+                        <a class="btn btn-warning btn-sm" th:href="@{/admin/task/update/{id}(id=${task.id})}">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/admin/task/delete/{id}(id=${task.id})}">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

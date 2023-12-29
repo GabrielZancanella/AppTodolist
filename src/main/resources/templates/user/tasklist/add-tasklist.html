@@ -6,15 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Lista de Tarefas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Minha Aplicação</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+	    <a class="navbar-brand" href="/">Minha Aplicação</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
 	        <ul class="navbar-nav">
 	            <li class="nav-item dropdown">
 	                <a class="nav-link dropdown-toggle" href="#" id="taskListDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -34,32 +78,57 @@
 	                    <a class="dropdown-item" href="/user/task/list">Listar Tarefas</a>
 	                </div>
 	            </li>
+	           	<li class="nav-item">
+                	<a class="nav-link" href="/">Login</a>
+            	</li>
 	        </ul>
-        </div>
-    </nav>
+	    </div>
+	</nav>
 
     <div class="container mt-4">
         <h2>Adicionar Lista de Tarefas</h2>
 
-        <form action="#" th:action="@{/user/tasklist/add}" th:object="${taskList}" method="post">
+        <form action="#" th:action="@{/admin/tasklist/add}" th:object="${taskList}" method="post">
             <!-- Campos para adicionar lista de tarefas -->
             <div class="form-group">
                 <label for="name">Nome:</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
-
+            <div class="form-group">
+                <label for="user">Usuário:</label>
+                <select class="form-control" id="user" th:field="*{user.id}" required>
+                    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="color">Cor:</label>
-                <input type="text" class="form-control" id="color" th:field="*{color}" required>
+                <select class="form-control" id="color" th:field="*{color}" required>
+                    <option value="Red">Red</option>
+                    <option value="Blue">Blue</option>
+                    <option value="Yellow">Yellow</option>
+                    <option value="Green">Green</option>
+                    <option value="Purple">Purple</option>
+                    <option value="Pink">Pink</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Brown">Brown</option>
+                    <option value="Grey">Grey</option>
+                    <option value="Black">Black</option>
+                    <option value="White">White</option>
+                    <option value="Turquoise">Turquoise</option>
+                    <option value="Coral">Coral</option>
+                    <option value="Gold">Gold</option>
+                    <option value="Silver">Silver</option>
+                </select>
             </div>
-			<input hidden type="text" id="createDate" th:field="*{createDate}" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" class="form-control" readonly>
+            <input hidden type="text" id="createDate" th:field="*{createDate}" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd HH:mm:ss')}" class="form-control" readonly>
             <!-- Adicione mais campos conforme necessário -->
             <button type="submit" class="btn btn-primary">Adicionar Lista de Tarefas</button>
         </form>
     </div>
-    
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- Adicione aqui scripts JS ou outras dependências que você precisa -->
+    <!-- Adicione os scripts do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

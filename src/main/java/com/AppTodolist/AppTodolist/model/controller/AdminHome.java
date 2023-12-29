@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.AppTodolist.AppTodolist.model.TaskLists;
 import com.AppTodolist.AppTodolist.model.Tasks;
 import com.AppTodolist.AppTodolist.model.UserRole;
 import com.AppTodolist.AppTodolist.model.Users;
@@ -43,8 +44,8 @@ public class AdminHome {
                 totalComuns++;
             }
         }
-        
-        long totalListas = taskListRepository.count();
+        List<TaskLists> listadetarefas =	taskListRepository.findAll();
+        long totalListas = listadetarefas.size();
         long outra 		= 0;
 	    long Red 		= 0;
 	    long Blue 		= 0;
@@ -61,7 +62,44 @@ public class AdminHome {
 	    long Coral 		= 0;
 	    long Gold 		= 0;
 	    long Silver 	= 0;
-        
+	    
+	    for (TaskLists taskList : listadetarefas) {
+	        String cor = taskList.getColor().toLowerCase(); 
+
+	        if ("red".equals(cor)) {
+	            Red++;
+	        } else if ("blue".equals(cor)) {
+	            Blue++;
+	        } else if ("yellow".equals(cor)) {
+	            Yellow++;
+	        } else if ("green".equals(cor)) {
+	            Green++;
+	        } else if ("purple".equals(cor)) {
+	            Purple++;
+	        } else if ("pink".equals(cor)) {
+	            Pink++;
+	        } else if ("orange".equals(cor)) {
+	            Orange++;
+	        } else if ("brown".equals(cor)) {
+	            Brown++;
+	        } else if ("grey".equals(cor) || "gray".equals(cor)) {
+	            Grey++;
+	        } else if ("black".equals(cor)) {
+	            Black++;
+	        } else if ("white".equals(cor)) {
+	            White++;
+	        } else if ("turquoise".equals(cor)) {
+	            Turquoise++;
+	        } else if ("coral".equals(cor)) {
+	            Coral++;
+	        } else if ("gold".equals(cor)) {
+	            Gold++;
+	        } else if ("silver".equals(cor)) {
+	            Silver++;
+	        } else {
+	            outra++;
+	        }
+	    }
         
         List<Tasks> tarefas 	= taskRepository.findAll();
         long totalTarefas 		= tarefas.size();
@@ -84,6 +122,22 @@ public class AdminHome {
         model.addAttribute("totalAdmins"     , totalAdmins);
         model.addAttribute("totalComuns"     , totalComuns);
         model.addAttribute("totalListas"     , totalListas);
+        model.addAttribute("outra"     		 , outra);
+        model.addAttribute("Red"     		 , Red);
+        model.addAttribute("Blue"     		 , Blue);
+        model.addAttribute("Yellow"     	 , Yellow);
+        model.addAttribute("Green"     	 	 , Green);
+        model.addAttribute("Purple"     	 , Purple);
+        model.addAttribute("Pink"     		 , Pink);
+        model.addAttribute("Orange"     	 , Orange);
+        model.addAttribute("Brown"     	 	 , Brown);
+        model.addAttribute("Grey"     		 , Grey);
+        model.addAttribute("Black"     		 , Black);
+        model.addAttribute("White"     		 , White);
+        model.addAttribute("Turquoise"     	 , Turquoise);
+        model.addAttribute("Coral"     		 , Coral);
+        model.addAttribute("Gold"     		 , Gold);
+        model.addAttribute("Silver"    		 , Silver);
         model.addAttribute("totalTarefas"    , totalTarefas);
         model.addAttribute("totalAfazer"     , totalAfazer);
         model.addAttribute("totalEmProgresso", totalEmProgresso);

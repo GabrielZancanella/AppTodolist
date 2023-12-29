@@ -4,81 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefas</title>
-
-    <!-- Adicione os links para os estilos Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.16.0/font/bootstrap-icons.css">
-
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 30px;
-        }
-
-        .navbar {
-            margin-bottom: 20px;
-        }
-
-        .navbar-light .navbar-brand, .navbar-light .navbar-nav .nav-link {
-            color: rgb(0, 0, 0);
-        }
-
-        .navbar-light .navbar-brand:hover, .navbar-light .navbar-nav .nav-link:hover {
-            color: rgb(0, 0, 0);
-        }
-
-        table {
-            margin-top: 20px;
-        }
-
-        th {
-            text-align: center;
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        td {
-            vertical-align: middle;
-            text-align: center;
-        }
-
-        .btn {
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
-
-        .btn-info {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        .btn-info:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-warning {
-            background-color: #ffc107;
-            color: #212529;
-        }
-
-        .btn-warning:hover {
-            background-color: #e0a800;
-        }
-
-        .btn-danger {
-            background-color: #dc3545;
-            color: #fff;
-        }
-
-        .btn-danger:hover {
-            background-color: #c82333;
-        }
-    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -115,12 +41,15 @@
                         <a class="dropdown-item" href="/admin/task/list">Listar</a>
                     </div>
                 </li>
+	            <li class="nav-item">
+                	<a class="nav-link" href="/">Login</a>
+            	</li>
             </ul>
         </div>
     </nav>
 
-    <div class="container">
-        <h2 class="text-center mt-4 mb-4">Lista de Tarefas</h2>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4">Lista de Tarefas</h2>
 
         <table class="table table-bordered table-striped">
             <thead class="thead-dark">
@@ -134,34 +63,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="task : ${tasks}" th:class="${task.status == 'A Fazer' ? 'table-danger' : (task.status == 'Em Progresso' ? 'table-info' : 'table-success')}">
-                    <td th:text="${task.id}"></td>
-                    <td th:text="${task.name}"></td>
-                    <td th:text="${task.description}"></td>
-                    <td th:text="${task.status}"></td>
-                
-                    <!-- Iterar sobre as listas de tarefas associadas a cada tarefa -->
-                    <td th:text="${task.taskList.name}"></td>
-                
-                    <!-- Adicione mais colunas conforme necessário -->
-                    <td>
-                        <a class="btn btn-info btn-sm" th:href="@{/admin/task/{id}(id=${task.id})}">
-                            <i class="bi bi-info-circle"></i> Detalhes
-                        </a>
-                        <a class="btn btn-warning btn-sm" th:href="@{/admin/task/update/{id}(id=${task.id})}">
-                            <i class="bi bi-pencil"></i> Editar
-                        </a>
-                        <a class="btn btn-danger btn-sm" th:href="@{/admin/task/delete/{id}(id=${task.id})}">
-                            <i class="bi bi-trash"></i> Excluir
-                        </a>
-                    </td>
-                </tr>
+                <tr th:each="task : ${tasks}" th:class="${task.status == 'A Fazer' ? 'table-danger' : (task.status == 'Em Progresso' ? 'table-warning' : 'table-success')}">
+				    <td th:text="${task.id}"></td>
+				    <td th:text="${task.name}"></td>
+				    <td th:text="${task.description}"></td>
+				    <td th:text="${task.status}"></td>
+				    <td th:text="${task.taskList.name}"></td>
+				    <td>
+				        <a class="btn btn-info btn-sm" th:href="@{/admin/task/{id}(id=${task.id})}">
+				            <i class="bi bi-info-circle"></i> Detalhes
+				        </a>
+				        <a class="btn btn-warning btn-sm" th:href="@{/admin/task/update/{id}(id=${task.id})}">
+				            <i class="bi bi-pencil"></i> Editar
+				        </a>
+				        <a class="btn btn-danger btn-sm" th:href="@{/admin/task/delete/{id}(id=${task.id})}">
+				            <i class="bi bi-trash"></i> Excluir
+				        </a>
+				    </td>
+				</tr>
             </tbody>
         </table>
     </div>
-
-    <!-- Adicione aqui scripts JS ou outras dependências que você precisa -->
-    <!-- Adicione os scripts do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

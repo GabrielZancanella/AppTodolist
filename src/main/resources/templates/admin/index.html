@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Aplicação</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -44,6 +44,9 @@
                     <a class="dropdown-item" href="/admin/task/list">Listar</a>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Login</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -52,39 +55,36 @@
     <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <h5 class="card-title">Informações de Usuários</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Adicione informações relevantes sobre usuários aqui -->
-                    <p>Total de Usuários: <span th:text="${totalUsuarios}"></span></p>
-                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                    <p class="lead">Total de Usuários: <span th:text="${totalUsuarios}"></span></p>
+                    <canvas id="usersChart" width="200" height="200"></canvas>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <h5 class="card-title">Listas de Tarefas</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Adicione informações relevantes sobre listas de tarefas aqui -->
-                    <p>Total de Listas:  <span th:text="${totalListas}"></span></p>
-                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                    <p class="lead">Total de Listas:  <span th:text="${totalListas}"></span></p>
+                     <canvas id="taskListsChart" width="200" height="200"></canvas>
                 </div>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     <h5 class="card-title">Tarefas</h5>
                 </div>
                 <div class="card-body">
-                    <!-- Adicione informações relevantes sobre tarefas aqui -->
-                    <p>Total de Tarefas:  <span th:text="${totalTarefas}"></span></p>
-                    <!-- ... (adicionar mais informações conforme necessário) ... -->
+                    <p class="lead">Total de Tarefas:  <span th:text="${totalTarefas}"></span></p>
+                    <canvas id="tasksChart" width="200" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -100,6 +100,94 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+	    var totalAdmins = [(${totalAdmins})];
+	    var totalComuns = [(${totalComuns})];
+		
+	    console.log('Total de Admins (no JavaScript):', totalAdmins);
+	    console.log('Total de Comuns (no JavaScript):', totalComuns);
+		
+        var ctx = document.getElementById('usersChart').getContext('2d');
+        var usersChart = new Chart(ctx, {
+            type: 'doughnut', // ou 'pie' para um gráfico de pizza
+            data: {
+                labels: ['Admin', 'Comum'],
+                datasets: [{
+                    data: [totalAdmins, totalComuns],
+                    backgroundColor: ['#007BFF', '#28A745'], // cores para admin e comum
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false
+                }
+            }
+        });
+        
+       	var totalAfazer 		= [(${totalAfazer})];
+	    var totalEmProgresso 	= [(${totalEmProgresso})];
+	    var totalConcluida 		= [(${totalConcluida})];
+	    
+        var ctx2 = document.getElementById('tasksChart').getContext('2d');
+        var tasksChart = new Chart(ctx2, {
+            type: 'doughnut', // ou 'pie' para um gráfico de pizza
+            data: {
+                labels: ['A fazer', 'Em progresso', 'Concluída'],
+                datasets: [{
+                    data: [totalAfazer, totalEmProgresso, totalConcluida],
+                    backgroundColor: ['#FF6347', '#FFD700', '#32CD32'], // cores para admin e comum
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false
+                }
+            }
+        });
+        
+        var outra 		= 5;
+	    var Red 		= 1;
+	    var Blue 		= 2;
+	    var Yellow 		= 3;
+	    var Green 		= 2;
+	    var Purple		= 11;
+	    var Pink 		= 2;
+	    var Orange 		= 3;
+	    var Brown		= 5;
+	    var Grey 		= 1;
+	    var Black 		= 1;
+	    var White 		= 1;
+	    var Turquoise 	= 1;
+	    var Coral 		= 3;
+	    var Gold 		= 3;
+	    var Silver 		= 3;
+	    
+        var ctx3 = document.getElementById('taskListsChart').getContext('2d');
+        var taskListsChart = new Chart(ctx3, {
+            type: 'doughnut', // ou 'pie' para um gráfico de pizza
+            data: {
+                labels: ['Outra', 'Red', 'Blue', 'Yellow', 
+                		'Green', 'Purple', 'Pink', 'Orange', 'Brown', 
+                		'Grey', 'Black', 'White', 'Turquoise', 'Coral', 
+                		'Gold', 'Silver'],
+                datasets: [{
+                    data: [outra, Red, Blue, Yellow, Green, Purple, Pink, Orange, Brown, Grey, Black, White, Turquoise, Coral, Gold, Silver],
+                    backgroundColor: ['#32CD32', '#FF6347', '#0000FF', '#FFFF00', '#008000', '#800080', '#FFC0CB', '#FFA500', '#A52A2A', '#808080', '#000000', '#FFFFFF', '#40E0D0', '#FF6F61', '#FFD700', '#C0C0C0'],
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: false
+                }
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

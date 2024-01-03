@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +29,13 @@ public class UserTaskListsController {
 
     @GetMapping("/add")
     public String showAddTaskListForm(Model model) {
-    	List<Users> userList = userRepository.findAll();
-        model.addAttribute("userList", userList);
+    	Users user = (Users) model.getAttribute("user");
+//    	
+//    	List<Users> userList = userRepository.findAll();
+//        model.addAttribute("userList", user);
+//        model.addAttribute("taskList", new TaskLists());
+//        return "/user/tasklist/add-tasklist";
+        //model.addAttribute("user", user);
         model.addAttribute("taskList", new TaskLists());
         return "user/tasklist/add-tasklist";
     }
@@ -36,7 +44,7 @@ public class UserTaskListsController {
     @PostMapping("/add")
     public String addTaskList(@ModelAttribute TaskLists taskList) {
         taskListsRepository.save(taskList);
-        return "redirect:/user/tasklist/list"; 
+        return "redirect:user/tasklist/list"; 
     }
 
     // READ

@@ -117,4 +117,11 @@ public class TaskLists implements Serializable {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+	@Override
+	public String toString() {
+		return "TaskLists [id=" + id + ", name=" + name + ", user=" + user + ", userId=" + userId + ", tasks=" + tasks
+				+ ", createDate=" + createDate + ", formattedCreateDate=" + formattedCreateDate + ", color=" + color
+				+ "]";
+	}
 }

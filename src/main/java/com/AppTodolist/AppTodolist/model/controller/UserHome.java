@@ -15,14 +15,15 @@ import com.AppTodolist.AppTodolist.model.Tasks;
 import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.repository.TaskListRepository;
 import com.AppTodolist.AppTodolist.repository.TaskRepository;
+import com.AppTodolist.AppTodolist.repository.UserRepository;
 //import com.AppTodolist.AppTodolist.repository.UserRepository;
 
 @Controller
-@RequestMapping("/user/")
+@RequestMapping("/user")
 public class UserHome {
 
-    //@Autowired
-    //private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private TaskListRepository taskListRepository;
@@ -32,25 +33,20 @@ public class UserHome {
 
     @GetMapping("/home")
     public String showLoginForm(Model model) {
-        Users user = (Users) model.getAttribute("logado");;
-        
-        System.out.println(user);
-
+        Users user = userRepository.findByUsername("Gabriel");//(Users) model.getAttribute("user");
         List<TaskLists> taskLists = taskListRepository.findByUser_id(user.getId());
-
+        
         List<Tasks> tasks = new ArrayList<>();
 
         for (TaskLists taskList : taskLists) {
             List<Tasks> tasksForList = taskRepository.findByTaskList(taskList);
             tasks.addAll(tasksForList);
         }
-        
-        
-        model.addAttribute("user", user);
-        model.addAttribute("taskLists", taskLists);
-        model.addAttribute("tasks", tasks);
 
-        return "/admin/index";
+        model.addAttribute("taskLists", taskLists);
+        model.addAttribute("user", user);
+        model.addAttribute("tasks", tasks);
+        return "user/index";
     }
 
 }

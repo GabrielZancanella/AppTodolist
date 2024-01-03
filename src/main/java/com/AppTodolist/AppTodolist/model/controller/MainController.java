@@ -67,13 +67,13 @@ public class MainController {
                 tasks.addAll(tasksForList);
             }
             
-            
             model.addAttribute("user", user);
+            model.addAttribute("userId", user.getId());
             model.addAttribute("taskLists", taskLists);
             model.addAttribute("tasks", tasks);
-            return "/user/index";
+//            return "/user/index";
         	//model.addAttribute("logado", user);
-            //return "redirect:/user/home";
+            return "redirect:/user/home";
         } else {
             return "error";
         }

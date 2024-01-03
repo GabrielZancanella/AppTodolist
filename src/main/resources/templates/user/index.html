@@ -42,19 +42,35 @@
     </div>
 </nav>
 
+	
+	<p class="lead">Usuário: <span th:text="${user.username}"></span></p>
+	
+	<p class="lead">Lista de Tarefas:
+		<ul>
+		    <li th:each="taskList : ${taskLists}">
+		        <span th:text="${taskList.name}"></span>
+		    </li>
+		</ul>
+	</p>
 
-<p class="lead">Seja bem vindo, <span th:text="${user.username}"></span>!</p>
-
+	<p class="lead">Tarefas:
+		<ul>
+	        <li th:each="task : ${tasks}">
+	            <span th:text="${task.name}"></span>
+	        </li>
+	    </ul>
+	</p>
+<!-- 
 <div th:each="taskList : ${taskLists}">
-    <!--<p class="lead">Nome da Lista: <span th:text="${taskList.name}"></span></p>-->
+    <!--<p class="lead">Nome da Lista: <span th:text="${taskList.name}"></span></p>
     <p class="lead"><span th:text="${taskList.name}"></span>;</p>
     <ul>
         <li th:each="task : ${tasks}">
 			<p class="lead"><span th:text="${task.name}"></span>;</p>
-            <!--<p th:if="${task.taskList.id eq taskList.id}" th:text="${task.name}"></p>-->
+            <!--<p th:if="${task.taskList.id eq taskList.id}" th:text="${task.name}"></p>
         </li>
     </ul>
-</div>
+</div>-->
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -95,10 +95,13 @@
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
             <div class="form-group">
-                <label for="user">Usuário:</label>
-                <select class="form-control" id="user" th:field="*{user.id}" required>
-                    <option th:each="user : ${userList}" th:value="${user.id}" th:text="${user.username}"></option>
-                </select>
+			<!-- <label for="user">Usuário:</label>
+			<p class="lead"><span th:text="${user.username}"></span></p>
+	
+			
+			<select class="form-control" id="user" th:field="*{user.id}" required>
+			    <option th:value="${user.id}" th:text="${user.username}"></option>
+			</select>-->
             </div>
             <div class="form-group">
                 <label for="color">Cor:</label>

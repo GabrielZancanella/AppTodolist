@@ -96,11 +96,10 @@
             </div>
 			<div class="form-group">
 			    <label for="user">Usuário:</label>
-			    <input type="text" class="form-control" id="userId" th:field="*{userId}" th:value="${user.id}" readonly required>
+			    <select class="form-control" id="user" th:field="*{user.id}" required>
+			        <option th:each="u : ${userList}" th:value="${u.id}" th:text="${u.username}" th:selected="${u.id eq user.id}"></option>
+			    </select>
 			</div>
-        	<!--<input hidden type="text" id="userId" th:field="*{userId}" required th:value="${user.id}" class="form-control">
-            <input hidden type="text" id="user" th:field="*{user}" th:value="${user}" class="form-control">-->
-            
             <div class="form-group">
                 <label for="color">Cor:</label>
                 <select class="form-control" id="color" th:field="*{color}" required>

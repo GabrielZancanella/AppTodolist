@@ -33,7 +33,7 @@ public class UserHome {
 
     @GetMapping("/home")
     public String showLoginForm(Model model) {
-        Users user = userRepository.findByUsername("Gabriel");//(Users) model.getAttribute("user");
+        Users user = userRepository.findByUsername("a");//(Users) model.getAttribute("user");
         List<TaskLists> taskLists = taskListRepository.findByUser_id(user.getId());
         
         List<Tasks> tasks = new ArrayList<>();

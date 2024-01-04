@@ -31,15 +31,15 @@ public class TaskLists implements Serializable {
     @JoinColumn(name = "user_id") // Mapeia a coluna user_id na tabela lista_tarefa
     private Users user;
 
-    @Column(name = "user_id", insertable = false, updatable = false)
-    private Long userId;
+   // @Column(name = "user_id", insertable = false, updatable = false)
+   // private Long userId;
 
     @OneToMany(mappedBy = "taskList", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tasks> tasks;
 
     @Column(name = "listardatcri")
-    private LocalDateTime createDate;
-
+    private LocalDateTime createDate; 
+   
     @PrePersist
     public void prePersist() {
         if (createDate == null) {
@@ -53,6 +53,10 @@ public class TaskLists implements Serializable {
     @Column(name = "listarcor", nullable = false)
     private String color;
 
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -75,7 +79,7 @@ public class TaskLists implements Serializable {
 
     public void setUser(Users user) {
         this.user = user;
-        this.userId = user.getId(); // Atualiza o userId quando o usuário é definido
+        //this.userId = user.getId(); // Atualiza o userId quando o usuário é definido
     }
 
     public List<Tasks> getTasks() {
@@ -109,18 +113,10 @@ public class TaskLists implements Serializable {
     public void setFormattedCreateDate(String formattedCreateDate) {
         this.formattedCreateDate = formattedCreateDate;
     }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
+    
 	@Override
 	public String toString() {
-		return "TaskLists [id=" + id + ", name=" + name + ", user=" + user + ", userId=" + userId + ", tasks=" + tasks
+		return "TaskLists [id=" + id + ", name=" + name + ", user=" + user + ", userId=" + getUserId() + ", tasks=" + tasks
 				+ ", createDate=" + createDate + ", formattedCreateDate=" + formattedCreateDate + ", color=" + color
 				+ "]";
 	}

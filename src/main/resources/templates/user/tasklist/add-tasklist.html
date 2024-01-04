@@ -86,7 +86,7 @@
 	</nav>
 
     <div class="container mt-4">
-        <h2>Adicionar Lista de Tarefas</h2>
+        <h2>Adicione seu Grupo de Tarefas <span th:text="${user.username}"></span> - <span th:text="${user.id}"></span></h2>
 
         <form action="#" th:action="@{/admin/tasklist/add}" th:object="${taskList}" method="post">
             <!-- Campos para adicionar lista de tarefas -->
@@ -94,15 +94,13 @@
                 <label for="name">Nome:</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
             </div>
-            <div class="form-group">
-			<!-- <label for="user">Usuário:</label>
-			<p class="lead"><span th:text="${user.username}"></span></p>
-	
-			
-			<select class="form-control" id="user" th:field="*{user.id}" required>
-			    <option th:value="${user.id}" th:text="${user.username}"></option>
-			</select>-->
-            </div>
+			<div class="form-group">
+			    <label for="user">Usuário:</label>
+			    <input type="text" class="form-control" id="userId" th:field="*{userId}" th:value="${user.id}" readonly required>
+			</div>
+        	<!--<input hidden type="text" id="userId" th:field="*{userId}" required th:value="${user.id}" class="form-control">
+            <input hidden type="text" id="user" th:field="*{user}" th:value="${user}" class="form-control">-->
+            
             <div class="form-group">
                 <label for="color">Cor:</label>
                 <select class="form-control" id="color" th:field="*{color}" required>

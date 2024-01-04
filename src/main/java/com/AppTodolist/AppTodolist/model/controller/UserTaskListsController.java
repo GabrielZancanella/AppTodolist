@@ -30,12 +30,15 @@ public class UserTaskListsController {
     @GetMapping("/add")
     public String showAddTaskListForm(Model model) {
     	Users user = (Users) model.getAttribute("user");
-//    	
+
+    	if (user == null) {
+    		user = userRepository.findByUsername("Gabriel");
+    	}
 //    	List<Users> userList = userRepository.findAll();
 //        model.addAttribute("userList", user);
 //        model.addAttribute("taskList", new TaskLists());
 //        return "/user/tasklist/add-tasklist";
-        //model.addAttribute("user", user);
+        model.addAttribute("user", user);
         model.addAttribute("taskList", new TaskLists());
         return "user/tasklist/add-tasklist";
     }

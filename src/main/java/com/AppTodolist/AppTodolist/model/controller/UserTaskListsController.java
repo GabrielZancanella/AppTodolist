@@ -45,7 +45,7 @@ public class UserTaskListsController {
     @PostMapping("/add")
     public String addTaskList(@ModelAttribute TaskLists taskList) {
         taskListsRepository.save(taskList);
-        return "redirect:user/tasklist/list"; 
+        return "redirect:/user/tasklist/list"; 
     }
 
     // READ

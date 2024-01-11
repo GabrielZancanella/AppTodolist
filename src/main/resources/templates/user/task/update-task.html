@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Update Task</title>
-    <!-- Adicione seus links CSS e scripts JS se necessário -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
           crossorigin="anonymous">
@@ -47,7 +46,6 @@
         <h2>Update Task</h2>
 
         <form action="#" th:action="@{/user/task/update/{id}(id=${updatedTask.id})}" th:object="${updatedTask}" method="post">
-            <!-- Campos para atualização -->
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" required>
@@ -73,8 +71,6 @@
 			        <option th:each="listTask : ${taskList}" th:value="${listTask.id}" th:text="${listTask.name}"></option>
 			    </select>
 			</div>
-
-            <!-- Adicione mais campos conforme necessário -->
 
             <button type="submit" class="btn btn-primary">Update</button>
         </form>

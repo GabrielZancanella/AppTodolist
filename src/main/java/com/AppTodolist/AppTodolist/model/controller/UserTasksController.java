@@ -14,7 +14,7 @@ import com.AppTodolist.AppTodolist.repository.TaskListRepository;
 import com.AppTodolist.AppTodolist.repository.TaskRepository;
 
 @Controller
-@RequestMapping("/user/task") // Adicionando "user/" ao mapeamento
+@RequestMapping("/user/task")
 public class UserTasksController {
 
     @Autowired
@@ -23,39 +23,35 @@ public class UserTasksController {
     @Autowired
     private TaskListRepository taskListRepository;
 
-    // CREATE
     @GetMapping("/add")
     public String showAddTaskForm(Model model) {
         List<TaskLists> taskList = taskListRepository.findAll();
         model.addAttribute("taskList", taskList);
 
         model.addAttribute("task", new Tasks());
-        return "user/task/add-task"; // Adicionando "user/" ao redirecionamento
+        return "user/task/add-task"; 
     }
 
-    // Método POST para processar a adição de tarefas
     @PostMapping("/add")
     public String addTask(@ModelAttribute Tasks task) {
         taskRepository.save(task);
-        return "redirect:/user/task/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/task/list"; 
     }
 
-    // READ
     @GetMapping("/list")
     public String listTasks(Model model) {
         List<Tasks> tasks = taskRepository.findAll();
         model.addAttribute("tasks", tasks);
 
-        return "user/task/tasklist"; // Adicionando "user/" ao redirecionamento
+        return "user/task/tasklist";
     }
 
-    // READ
     @GetMapping("/{id}")
     public String taskDetails(@PathVariable Long id, Model model) {
         Tasks task = taskRepository.findById(id).orElse(null);
 
         if (task == null) {
-            return "redirect:/user/error"; // Adicionando "user/" ao redirecionamento
+            return "redirect:/user/error";
         }
         
         if (task.getInclusion() != null) {
@@ -67,23 +63,21 @@ public class UserTasksController {
         }
         
         model.addAttribute("task", task);
-        return "user/task/taskDetails"; // Adicionando "user/" ao redirecionamento
+        return "user/task/taskDetails";
     }
 
-    // UPDATE
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Tasks task = taskRepository.findById(id).orElse(null);
 
         if (task == null) {
-            return "redirect:/user/task/list"; // Adicionando "user/" ao redirecionamento
+            return "redirect:/user/task/list";
         }
 
         model.addAttribute("updatedTask", task);
-        return "user/task/update-task"; // Adicionando "user/" ao redirecionamento
+        return "user/task/update-task";
     }
 
-    // UPDATE
     @PostMapping("/update/{id}")
     public String updateTask(@PathVariable Long id, @ModelAttribute Tasks updatedTask) {
         Tasks task = taskRepository.findById(id).orElse(null);
@@ -97,13 +91,12 @@ public class UserTasksController {
             taskRepository.save(task);
         }
 
-        return "redirect:/user/task/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/task/list";
     }
 
-    // DELETE
     @GetMapping("/delete/{id}")
     public String deleteTask(@PathVariable Long id) {
         taskRepository.deleteById(id);
-        return "redirect:/user/task/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/task/list";
     }
 }

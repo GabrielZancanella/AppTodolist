@@ -46,7 +46,6 @@
         <h2>Update Task List</h2>
 
 	<form action="#" th:action="@{/user/tasklist/update/{id}(id=${taskList.id})}" th:object="${taskList}" method="post">
-	    <!-- Campos para atualização -->
 	    <div class="form-group">
 	        <label for="name">Name:</label>
 	        <input type="text" class="form-control" id="name" th:field="*{name}" required>
@@ -61,9 +60,6 @@
 		    <label for="user">Usuário:</label>
 		    <span class="form-control" id="user" th:text="${principal.username}"></span>
 		</div>
-	
-	    <!-- Adicione mais campos conforme necessário -->
-	
 	    <button type="submit" class="btn btn-primary">Update</button>
 	</form>
 

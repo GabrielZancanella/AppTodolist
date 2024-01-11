@@ -9,11 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,14 +38,11 @@ public class UserTaskListsController {
         return "user/tasklist/add-tasklist";
     }
 
-    // Método POST para processar a adição de lista de tarefas
     @PostMapping("/add")
     public String addTaskList(@ModelAttribute TaskLists taskList) {
         taskListsRepository.save(taskList);
         return "redirect:/user/tasklist/list"; 
     }
-
-    // READ
     @GetMapping("/list")
     public String listTaskLists(Model model) {
         List<TaskLists> taskLists = null;
@@ -68,7 +62,6 @@ public class UserTaskListsController {
         return "user/tasklist/tasklist_list"; 
     }
 
-    // READ
     @GetMapping("/{id}")
     public String taskListDetails(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
@@ -81,7 +74,6 @@ public class UserTaskListsController {
         return "user/tasklist/taskListDetails"; 
     }
 
-    // UPDATE
     @GetMapping("/update/{id}")
     public String showUpdateTaskListForm(@PathVariable Long id, Model model) {
         TaskLists taskList = taskListsRepository.findById(id).orElse(null);
@@ -95,7 +87,6 @@ public class UserTaskListsController {
         return "user/tasklist/update-tasklist"; 
     }
 
-    // POST para processar a atualização da lista de tarefas
     @PostMapping("/update/{id}")
     public String updateTaskList(@PathVariable Long id, @ModelAttribute TaskLists updatedTaskList) {
         Optional<TaskLists> currentTaskListOptional = taskListsRepository.findById(id);
@@ -109,14 +100,12 @@ public class UserTaskListsController {
         return "redirect:/user/tasklist/list"; 
     }
 
-    // DELETE
     @GetMapping("/delete/{id}")
     public String deleteTaskList(@PathVariable Long id) {
         taskListsRepository.deleteById(id);
         return "redirect:/user/tasklist/list"; 
     }
 
-    // Método privado para atualizar os campos da lista de tarefas
     private void updateTaskListFields(TaskLists taskList, TaskLists updatedTaskList) {
         taskList.setName(updatedTaskList.getName());
         taskList.setColor(updatedTaskList.getColor());

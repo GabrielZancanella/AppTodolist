@@ -22,7 +22,7 @@ import com.AppTodolist.AppTodolist.repository.TaskListRepository;
 import com.AppTodolist.AppTodolist.repository.UserRepository;
 
 @Controller
-@RequestMapping("/user/user") // Adicionando "user/" ao mapeamento
+@RequestMapping("/user/user") 
 public class UserUserController {
 
     @Autowired
@@ -31,7 +31,6 @@ public class UserUserController {
     @Autowired
     private TaskListRepository taskListsRepository;
 
-    // CREATE
     @GetMapping("/add")
     public String showAddUserForm(Model model) {
     	model.addAttribute("role", UserRole.values());
@@ -39,19 +38,17 @@ public class UserUserController {
         return "user/user/add-user";
     }
 
-    // Método POST para processar a adição de usuários
     @PostMapping("/add")
     public String addUser(@ModelAttribute Users user) {
     	
         if (user.getRole() == null) {
-            user.setRole(UserRole.USER); // Padrão para USER se não for selecionado
+            user.setRole(UserRole.USER);
         }
     	
         userRepository.save(user);
-        return "redirect:/user/user/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/user/list";
     }
 
-    // READ
     @GetMapping("/list")
     public String listUsers(Model model) {
         List<Users> users = userRepository.findAll();
@@ -60,31 +57,24 @@ public class UserUserController {
 
         for (Users user : users) {
             List<TaskLists> userTaskLists = taskListsRepository.findByUser_id(user.getId());
-
-            // Adiciona à lista de DTOs
             for (TaskLists taskList : userTaskLists) {
-            //    UserTaskDto userTaskDto = new UserTaskDto(user, taskList.getName());
-            //    userTaskDtoList.add(userTaskDto);
             	usersTaskList.add(taskList);
             }
         }
-
-        //model.addAttribute("userTaskDtoList", userTaskDtoList);
         model.addAttribute("usersTaskList", usersTaskList);
         model.addAttribute("users", users);
         
 
-        return "user/user/userList"; // Adicionando "user/" ao redirecionamento
+        return "user/user/userList";
     }
 
-    // READ
     @GetMapping("/{id}")
     public String userDetails(@PathVariable Long id, Model model) {
         Optional<Users> currentUser = userRepository.findById(id);
         Users user = currentUser.orElse(null);
 
         if (user == null) {
-            return "redirect:/user/user/list"; // Adicionando "user/" ao redirecionamento
+            return "redirect:/user/user/list";
         }
 
         List<TaskLists> taskLists = taskListsRepository.findByUser_id(user.getId());
@@ -93,10 +83,9 @@ public class UserUserController {
         UserTaskDto userTaskDto = new UserTaskDto(user, taskNames);
 
         model.addAttribute("userTaskDto", userTaskDto);
-        return "user/user/userDetails"; // Adicionando "user/" ao redirecionamento
+        return "user/user/userDetails";
     }
 
-    // UPDATE
     @GetMapping("/update/{id}")
     public String showUpdateForm(@PathVariable Long id, Model model) {
         Optional<Users> currentUser = userRepository.findById(id);
@@ -107,14 +96,13 @@ public class UserUserController {
         }
 
         if (user == null) {
-            return "redirect:/user/user/list"; // Adicionando "user/" ao redirecionamento
+            return "redirect:/user/user/list";
         }
 
         model.addAttribute("updatedUser", user);
-        return "user/user/update-user"; // Adicionando "user/" ao redirecionamento
+        return "user/user/update-user";
     }
 
-    // POST para processar a atualização do usuário
     @PostMapping("/update/{id}")
     public String updateUser(@PathVariable Long id, @ModelAttribute Users updatedUser) {
         Optional<Users> currentUser = userRepository.findById(id);
@@ -132,12 +120,12 @@ public class UserUserController {
             }
         }
 
-        return "redirect:/user/user/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/user/list";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         userRepository.deleteById(id);
-        return "redirect:/user/user/list"; // Adicionando "user/" ao redirecionamento
+        return "redirect:/user/user/list";
     }
 }

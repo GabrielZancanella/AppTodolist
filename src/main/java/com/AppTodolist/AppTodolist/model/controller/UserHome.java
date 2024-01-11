@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.AppTodolist.AppTodolist.model.TaskLists;
 import com.AppTodolist.AppTodolist.model.Tasks;
-//import com.AppTodolist.AppTodolist.model.UserRole;
 import com.AppTodolist.AppTodolist.model.Users;
 import com.AppTodolist.AppTodolist.repository.TaskListRepository;
 import com.AppTodolist.AppTodolist.repository.TaskRepository;
 import com.AppTodolist.AppTodolist.repository.UserRepository;
-//import com.AppTodolist.AppTodolist.repository.UserRepository;
 
 @Controller
 @RequestMapping("/user")

@@ -43,7 +43,7 @@
     <div class="container">
         <h2>Criar Nova Tarefa</h2>
 
-        <form action="#" th:action="@{/admin/task/add}" th:object="${task}" method="post">
+        <form action="#" th:action="@{/user/task/add}" th:object="${task}" method="post">
             <div class="form-group">
                 <label for="name">Nome:</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control" required>

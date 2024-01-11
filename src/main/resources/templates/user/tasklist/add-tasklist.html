@@ -88,7 +88,7 @@
     <div class="container mt-4">
         <h2>Adicione seu Grupo de Tarefas <span th:text="${user.username}"></span> - <span th:text="${user.id}"></span></h2>
 
-        <form action="#" th:action="@{/admin/tasklist/add}" th:object="${taskList}" method="post">
+        <form action="#" th:action="@{/user/tasklist/add}" th:object="${taskList}" method="post">
             <!-- Campos para adicionar lista de tarefas -->
             <div class="form-group">
                 <label for="name">Nome:</label>

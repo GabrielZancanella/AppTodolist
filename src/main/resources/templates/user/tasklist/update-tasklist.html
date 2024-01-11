@@ -45,7 +45,7 @@
     <div class="container mt-4">
         <h2>Update Task List</h2>
 
-	<form action="#" th:action="@{/admin/tasklist/update/{id}(id=${taskList.id})}" th:object="${taskList}" method="post">
+	<form action="#" th:action="@{/user/tasklist/update/{id}(id=${taskList.id})}" th:object="${taskList}" method="post">
 	    <!-- Campos para atualização -->
 	    <div class="form-group">
 	        <label for="name">Name:</label>
@@ -67,7 +67,7 @@
 	    <button type="submit" class="btn btn-primary">Update</button>
 	</form>
 
-        <a th:href="@{/admin/tasklist/list}" class="btn btn-secondary">Back to Task List</a>
+        <a th:href="@{/user/tasklist/list}" class="btn btn-secondary">Back to Task List</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

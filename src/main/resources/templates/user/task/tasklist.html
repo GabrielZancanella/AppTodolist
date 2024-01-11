@@ -61,13 +61,13 @@
 				    <td th:text="${task.status}"></td>
 				    <td th:text="${task.taskList.name}"></td>
 				    <td>
-				        <a class="btn btn-info btn-sm" th:href="@{/admin/task/{id}(id=${task.id})}">
+				        <a class="btn btn-info btn-sm" th:href="@{/user/task/{id}(id=${task.id})}">
 				            <i class="bi bi-info-circle"></i> Detalhes
 				        </a>
-				        <a class="btn btn-warning btn-sm" th:href="@{/admin/task/update/{id}(id=${task.id})}">
+				        <a class="btn btn-warning btn-sm" th:href="@{/user/task/update/{id}(id=${task.id})}">
 				            <i class="bi bi-pencil"></i> Editar
 				        </a>
-				        <a class="btn btn-danger btn-sm" th:href="@{/admin/task/delete/{id}(id=${task.id})}">
+				        <a class="btn btn-danger btn-sm" th:href="@{/user/task/delete/{id}(id=${task.id})}">
 				            <i class="bi bi-trash"></i> Excluir
 				        </a>
 				    </td>

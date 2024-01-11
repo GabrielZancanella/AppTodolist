@@ -37,7 +37,6 @@ public class AdminHome {
         long totalComuns   		= 0;
 
         for (Users user : usuarios) {
-            // Verifica o papel do usuário
             if (user.getRole() == UserRole.USER.ADMIN) {
                 totalAdmins++;
             } else if (user.getRole() == UserRole.USER.USER) {
@@ -108,7 +107,6 @@ public class AdminHome {
         long totalConcluida 	= 0;
         
         for (Tasks task : tarefas) {
-            // Verifica o papel do usuário
             if ("A Fazer".equals(task.getStatus())) {
                 totalAfazer++;
             } else if ("Em Progresso".equals(task.getStatus())) {

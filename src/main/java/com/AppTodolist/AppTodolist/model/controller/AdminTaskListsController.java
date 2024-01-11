@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,13 +48,6 @@ public class AdminTaskListsController {
     public String listTaskLists(Model model, Principal principal) {
         List<TaskLists> taskLists = null;
         taskLists = taskListsRepository.findAll();
-
-        /*if (principal != null) {
-            String username = principal.getName();
-            Users user = userRepository.findByUsername(username);
-            taskLists = taskListsRepository.findByUser_id(user.getId());
-        }
-		*/
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
         if (taskLists != null) {
@@ -114,7 +106,7 @@ public class AdminTaskListsController {
         taskList.setColor(updatedTaskList.getColor());
         taskList.setUser(updatedTaskList.getUser());
     }
- // DELETE
+
     @GetMapping("/delete/{id}")
     public String deleteTaskList(@PathVariable("id") Long id) {
         taskListsRepository.deleteById(id);

@@ -30,7 +30,6 @@ public class MainController {
     @Autowired
     private TaskRepository taskRepository;
 
-    // CREATE
     @GetMapping("/")
     public String showLoginForm(Model model) {
         return "login";
@@ -52,8 +51,6 @@ public class MainController {
 
         userContext.setCurrentUser(user);
 
-
-        // Redirecionamento com base nos papéis
         if (user.getRole() == UserRole.ADMIN) {
         	return "redirect:/admin/home";
         } else if (user.getRole() == UserRole.USER) {
@@ -71,8 +68,6 @@ public class MainController {
             model.addAttribute("userId", user.getId());
             model.addAttribute("taskLists", taskLists);
             model.addAttribute("tasks", tasks);
-//            return "/user/index";
-        	//model.addAttribute("logado", user);
             return "redirect:/user/home";
         } else {
             return "error";

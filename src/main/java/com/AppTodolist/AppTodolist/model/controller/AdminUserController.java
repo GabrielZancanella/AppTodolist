@@ -35,16 +35,31 @@ public class AdminUserController {
     @GetMapping("/add")
     public String showAddUserForm(Model model) {
     	model.addAttribute("role", UserRole.values());
+        model.addAttribute("mensagemErro", "");
         model.addAttribute("user", new Users());
         return "admin/user/add-user";
     }
 
     // Método POST para processar a adição de usuários
     @PostMapping("/add")
-    public String addUser(@ModelAttribute Users user) {
+    public String addUser(@ModelAttribute Users user, Model model) {
     	
         if (user.getRole() == null) {
             user.setRole(UserRole.USER); // Padrão para USER se não for selecionado
+        }
+        
+        if (!(user.getEmail().contains("@"))) {
+        	user.setEmail("");
+        	model.addAttribute("user", user);
+            model.addAttribute("mensagemErro", "Não possui @!");
+            return "admin/user/add-user";
+        }
+        
+        if (!(user.getEmail().contains("outlook")) && !(user.getEmail().contains("gmail"))) {
+        	user.setEmail("");
+        	model.addAttribute("user", user);
+            model.addAttribute("mensagemErro", "Não possui provedor!");
+            return "admin/user/add-user";
         }
     	
         userRepository.save(user);

@@ -51,6 +51,10 @@
         button:hover {
             background-color: #0056b3;
         }
+        
+        h3{
+			color: red;
+		}
     </style>
 </head>
 <body>
@@ -97,6 +101,7 @@
 
     <div class="container">
         <h2>Adicionar Usuário</h2>
+        <h3><span th:text="${mensagemErro}"></span></h3>
 
         <form action="/admin/user/add" method="post">
             <div class="form-group">

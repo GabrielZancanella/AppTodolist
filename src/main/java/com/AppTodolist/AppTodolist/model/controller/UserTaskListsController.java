@@ -31,7 +31,7 @@ public class UserTaskListsController {
     	if (user == null) {
     		user = userRepository.findByUsername("a");
     	}
-    	List<Users> userList = userRepository.findAll();
+    	List<Users> userList = userRepository.findByUsernameAndSenha(user.getUsername(), user.getSenha());
         model.addAttribute("user", user);
         model.addAttribute("userList", userList);
         model.addAttribute("taskList", new TaskLists());
